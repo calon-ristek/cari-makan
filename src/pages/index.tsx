@@ -1,15 +1,9 @@
+import { SearchIcon } from "@heroicons/react/solid";
 import type { NextPage } from "next";
 import Head from "next/head";
-import { trpc } from "../utils/trpc";
-
-type TechnologyCardProps = {
-  name: string;
-  description: string;
-  documentation: string;
-};
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const hello = trpc.useQuery(["example.hello", { text: "from tRPC" }]);
 
   return (
     <>
@@ -19,60 +13,24 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="container mx-auto flex flex-col items-center justify-center min-h-screen p-4">
-        <h1 className="text-5xl md:text-[5rem] leading-normal font-extrabold text-gray-700">
-          Create <span className="text-purple-300">T3</span> App
-        </h1>
-        <p className="text-2xl text-gray-700">This stack uses:</p>
-        <div className="grid gap-3 pt-3 mt-3 text-center md:grid-cols-2 lg:w-2/3">
-          <TechnologyCard
-            name="NextJS"
-            description="The React framework for production"
-            documentation="https://nextjs.org/"
-          />
-          <TechnologyCard
-            name="TypeScript"
-            description="Strongly typed programming language that builds on JavaScript, giving you better tooling at any scale"
-            documentation="https://www.typescriptlang.org/"
-          />
-          <TechnologyCard
-            name="TailwindCSS"
-            description="Rapidly build modern websites without ever leaving your HTML"
-            documentation="https://tailwindcss.com/"
-          />
-          <TechnologyCard
-            name="tRPC"
-            description="End-to-end typesafe APIs made easy"
-            documentation="https://trpc.io/"
-          />
+      <main className="bg-gradient-to-tr from-primary via-primary to-secondary h-screen">
+        <h1 className="text-white ml-2 text-xl">Logo</h1>
+        <h1 className="text-lg text-white ml-2 mt-5">Selamat Datang Maurice Yang</h1>
+        <h1 className="text-white ml-2 text-3xl mb-5">Mencari makan di UI tak pernah semudah ini</h1>
+        <div className="relative">
+          <input placeholder="Cari Kantin" type="search" className="input-field placeholder:text-white mb-5 border-white border-4 bg-transparent text-white focus:bg-white focus:text-black" />
+          {/* <SearchIcon className="w-5 h-5 absolute" /> */}
         </div>
-        <div className="pt-6 text-2xl text-blue-500 flex justify-center items-center w-full">
-          {hello.data ? <p>{hello.data.greeting}</p> : <p>Loading..</p>}
-        </div>
+        <section className="h-full w-full bg-white rounded-t-3xl p-3">
+          <h2 className="text-xl"></h2>
+          <Link href="/explore">
+            <a className="btn btn-primary w-full">Lihat Semua</a>
+          </Link>
+        </section>
       </main>
     </>
   );
 };
 
-const TechnologyCard = ({
-  name,
-  description,
-  documentation,
-}: TechnologyCardProps) => {
-  return (
-    <section className="flex flex-col justify-center p-6 duration-500 border-2 border-gray-500 rounded shadow-xl motion-safe:hover:scale-105">
-      <h2 className="text-lg text-gray-700">{name}</h2>
-      <p className="text-sm text-gray-600">{description}</p>
-      <a
-        className="mt-3 text-sm underline text-violet-500 decoration-dotted underline-offset-2"
-        href={documentation}
-        target="_blank"
-        rel="noreferrer"
-      >
-        Documentation
-      </a>
-    </section>
-  );
-};
 
 export default Home;
