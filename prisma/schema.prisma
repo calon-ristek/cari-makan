@@ -46,13 +46,18 @@ model Session {
 }
 
 model User {
-    id            String    @id @default(cuid())
+    id            String     @id @default(cuid())
     name          String?
-    email         String?   @unique
+    email         String?    @unique
     emailVerified DateTime?
     image         String?
     accounts      Account[]
     sessions      Session[]
+    Bookmark      Bookmark?
+    Review        Review[]
+    Upvote        Upvote[]
+    Downvote      Downvote[]
+    Reply         Reply[]
 }
 
 model VerificationToken {
@@ -61,4 +66,100 @@ model VerificationToken {
     expires    DateTime
 
     @@unique([identifier, token])
+}
+
+enum Spot {
+    RIK
+    FPSI
+    FISIP
+    FEB
+    FH
+    FMIPA
+    FT
+    FKM
+    VOKASI
+    FASILKOM_LAMA
+    FASILKOM_BARU
+    ASRAMA
+}
+
+model Kantin {
+    id         String      @id @default(cuid())
+    name       String      @unique @db.VarChar(255)
+    faculty    Spot
+    TagKantin  TagKantin[]
+    Bookmark   Bookmark?   @relation(fields: [bookmarkId], references: [id])
+    bookmarkId String?
+    embedUrl   String
+    Review     Review[]
+}
+
+model Reply {
+    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
+    reviewUserId   String
+    reviewKantinId String
+    message        String
+    User           User   @relation(fields: [userId], references: [id])
+    userId         String
+
+    @@id([userId, reviewUserId, reviewKantinId])
+}
+
+model Review {
+    userId    String
+    User      User       @relation(fields: [userId], references: [id])
+    kantinId  String
+    Kantin    Kantin     @relation(fields: [kantinId], references: [id])
+    score     Int
+    message   String?
+    anonymous Boolean    @default(false)
+    Upvotes   Upvote[]
+    Downvotes Downvote[]
+    Replies   Reply[]
+
+    @@id([userId, kantinId])
+}
+
+model Upvote {
+    userId         String
+    User           User   @relation(fields: [userId], references: [id])
+    reviewId       String
+    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
+    reviewUserId   String
+    reviewKantinId String
+
+    @@id([userId, reviewId])
+}
+
+model Downvote {
+    userId         String
+    User           User   @relation(fields: [userId], references: [id])
+    reviewId       String
+    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
+    reviewUserId   String
+    reviewKantinId String
+
+    @@id([userId, reviewId])
+}
+
+model Bookmark {
+    id     String   @id @default(cuid())
+    User   User     @relation(fields: [userId], references: [id])
+    userId String   @unique
+    Kantin Kantin[]
+}
+
+model Tag {
+    id        String      @id @default(cuid())
+    name      String      @unique
+    TagKantin TagKantin[]
+}
+
+model TagKantin {
+    kantinId String
+    Kantin   Kantin @relation(fields: [kantinId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+    tagId    String
+    Tag      Tag    @relation(fields: [tagId], references: [id], onDelete: Cascade, onUpdate: Cascade)
+
+    @@id([tagId, kantinId])
 }
