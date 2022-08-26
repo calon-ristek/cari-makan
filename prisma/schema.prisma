@@ -47,7 +47,7 @@ model Session {
 
 model User {
     id            String     @id @default(cuid())
-    name          String?
+    name          String?    @unique
     email         String?    @unique
     emailVerified DateTime?
     image         String?
@@ -91,25 +91,26 @@ model Kantin {
     Bookmark   Bookmark?   @relation(fields: [bookmarkId], references: [id])
     bookmarkId String?
     embedUrl   String
+    image      String
     Review     Review[]
 }
 
 model Reply {
-    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
-    reviewUserId   String
-    reviewKantinId String
+    Review         Review @relation(fields: [reviewUserName, reviewKantinName], references: [userName, kantinName])
+    reviewUserName   String
+    reviewKantinName String
     message        String
-    User           User   @relation(fields: [userId], references: [id])
-    userId         String
+    User           User   @relation(fields: [userName], references: [name])
+    userName         String
 
-    @@id([userId, reviewUserId, reviewKantinId])
+    @@id([userName, reviewUserName, reviewKantinName])
 }
 
 model Review {
-    userId    String
-    User      User       @relation(fields: [userId], references: [id])
-    kantinId  String
-    Kantin    Kantin     @relation(fields: [kantinId], references: [id])
+    userName    String
+    User      User       @relation(fields: [userName], references: [name])
+    kantinName  String
+    Kantin    Kantin     @relation(fields: [kantinName], references: [name])
     score     Int
     message   String?
     anonymous Boolean    @default(false)
@@ -117,29 +118,29 @@ model Review {
     Downvotes Downvote[]
     Replies   Reply[]
 
-    @@id([userId, kantinId])
+    @@id([userName, kantinName])
 }
 
 model Upvote {
-    userId         String
-    User           User   @relation(fields: [userId], references: [id])
+    userName         String
+    User           User   @relation(fields: [userName], references: [name])
     reviewId       String
-    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
-    reviewUserId   String
-    reviewKantinId String
+    Review         Review @relation(fields: [reviewUserName, reviewKantinName], references: [userName, kantinName])
+    reviewUserName   String
+    reviewKantinName String
 
-    @@id([userId, reviewId])
+    @@id([userName, reviewId])
 }
 
 model Downvote {
-    userId         String
-    User           User   @relation(fields: [userId], references: [id])
+    userName         String
+    User           User   @relation(fields: [userName], references: [name])
     reviewId       String
-    Review         Review @relation(fields: [reviewUserId, reviewKantinId], references: [userId, kantinId])
-    reviewUserId   String
-    reviewKantinId String
+    Review         Review @relation(fields: [reviewUserName, reviewKantinName], references: [userName, kantinName])
+    reviewUserName   String
+    reviewKantinName String
 
-    @@id([userId, reviewId])
+    @@id([userName, reviewId])
 }
 
 model Bookmark {
