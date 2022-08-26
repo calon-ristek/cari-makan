@@ -1,15 +1,13 @@
-import { AnnotationIcon, SearchIcon, StarIcon } from "@heroicons/react/solid";
+import { SearchIcon } from "@heroicons/react/solid";
 import type { NextPage } from "next";
-import Link from "next/link";
 import Card from "components/Card"
-import ExampleImage from "src/public/example.jpg"
-import Image from 'next/image'
+import ExampleImage from "public/example.jpg"
+import Container from "components/Container";
 
 const Home: NextPage = () => {
 
   return (
-      <main className="bg-gradient-to-tr from-primary via-primary to-secondary min-h-screen">
-        <h1 className="text-white ml-2 text-xl">Logo</h1>
+      <Container>
         <h1 className="text-lg text-primary-100 mx-2 mt-7">Selamat Datang Maurice Yang</h1>
         <h1 className="text-white mx-2 text-3xl mb-7 font-semibold">Mencari makan di UI tak pernah semudah ini</h1>
         <div className="relative z-[2]">
@@ -36,7 +34,7 @@ const Home: NextPage = () => {
           </ul>
           
         </section>
-      </main>
+      </Container>
   );
 };
 
