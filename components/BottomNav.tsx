@@ -7,7 +7,7 @@ const BottomNav = () => {
     const router = useRouter()
 
   return (
-    <nav className='fixed bottom-0 left-[50%] rounded-t-[20px] overflow-hidden translate-x-[-50%] max-w-screen-sm w-full flex items-center justify-evenly transition-all'>
+    <nav className='fixed bottom-0 left-[50%] rounded-t-lg overflow-hidden translate-x-[-50%] max-w-screen-sm w-full flex items-center justify-evenly transition-all'>
         <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
             <Link href="/">
                 <a className="w-full">
