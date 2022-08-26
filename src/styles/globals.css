@@ -9,7 +9,7 @@
 
 @layer components {
     .btn {
-        @apply px-3 py-2 inline-block rounded-3xl text-center;
+        @apply px-3 py-2 inline-block rounded-lg text-center;
     }
     .btn-primary {
         @apply bg-secondary text-white;
