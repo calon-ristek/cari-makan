@@ -7,7 +7,7 @@ const BottomNav = () => {
     const router = useRouter()
 
   return (
-    <nav className='fixed bottom-0 left-[50%] rounded-t-lg overflow-hidden translate-x-[-50%] max-w-screen-sm w-full flex items-center justify-evenly transition-all'>
+    <nav className='z-10 fixed bottom-0 left-[50%] rounded-t-lg overflow-hidden translate-x-[-50%] max-w-[500px] w-full flex items-center justify-evenly transition-all'>
         <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
             <Link href="/">
                 <a className="w-full">
@@ -16,24 +16,24 @@ const BottomNav = () => {
                 </a>
             </Link>
         </section>
-        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/explore' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
-            <Link href="/explore">
+        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/kantin' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
+            <Link href="/kantin">
                 <a className="w-full">
                     <SearchIcon className='w-7 h-7 m-auto' />
                     Explore
                 </a>
             </Link>
         </section>
-        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/about' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
-            <Link href="/saved">
+        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/account/bookmark' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
+            <Link href="/account/bookmark">
                 <a className="w-full">
                     <BookmarkIcon className='w-7 h-7 m-auto' />
-                    Saved
+                    Bookmark
                 </a>
             </Link>
         </section>
-        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/profile' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
-            <Link href="/profile">
+        <section className={`flex-1 text-center px-2 py-2 ${router.pathname === '/account/profile' ? 'bg-primary-light' : 'bg-primary-dark'} text-white`}>
+            <Link href="/account/profile">
                 <a className="w-full">
                     <UserCircleIcon className='w-7 h-7 m-auto' />
                     Profile
