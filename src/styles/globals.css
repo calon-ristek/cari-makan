@@ -1,12 +1,18 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+@layer base {
+    * {
+        -webkit-tap-highlight-color: transparent;
+    }
+}
+
 @layer components {
     .btn {
-        @apply px-3 py-2 inline-block rounded-3xl text-center;
+        @apply px-3 py-2 inline-block rounded-lg text-center;
     }
     .btn-primary {
-        @apply bg-secondary text-white shadow-md;
+        @apply bg-secondary text-white;
     }
     .input-field {
         @apply px-3 py-2 inline-block rounded-3xl w-[calc(100%-20px)] my-2 mx-2 outline-none transition-all;

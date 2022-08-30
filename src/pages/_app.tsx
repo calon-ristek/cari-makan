@@ -6,6 +6,7 @@ import superjson from "superjson";
 import { SessionProvider } from "next-auth/react";
 import "../styles/globals.css";
 import BottomNav from "components/BottomNav";
+import Head from "next/head";
 
 const MyApp: AppType = ({
   Component,
@@ -13,10 +14,13 @@ const MyApp: AppType = ({
 }) => {
   return (
     <SessionProvider session={session}>
-      <main className="max-w-screen-sm m-auto min-h-screen relative">
+      <Head>
+        <title>CariKantin - Mencari makan di UI tak pernah semudah ini</title>
+      </Head>
+      <main className="max-w-screen-sm m-auto min-h-screen mb-[70px]">
         <Component {...pageProps} />
-        <BottomNav />
       </main>
+      <BottomNav />
     </SessionProvider>
   );
 };
