@@ -81,6 +81,12 @@ enum Spot {
     ASRAMA
 }
 
+model Faculty {
+    id         String      @id @default(cuid())
+    name       String      @unique
+    logo       String
+}
+
 model Kantin {
     id         String      @id @default(cuid())
     name       String      @unique @db.VarChar(255)
