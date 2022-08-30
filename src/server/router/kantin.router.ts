@@ -9,7 +9,7 @@ export const kantinRouter = createRouter()
     resolve: async ({ctx}) => {
         const canteens = ctx.prisma.kantin.findMany({
             include: {
-                Review: true
+              Review: true
             }
         })
         return canteens
