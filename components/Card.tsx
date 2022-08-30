@@ -13,7 +13,7 @@ interface CardProps {
 
 const Card = ({image, name, faculty, rating, reviewCount}: CardProps) => {
   return (
-    <article className="mx-1 my-3 p-3 rounded-xl">
+    <article className="mx-1 my-3 rounded-xl">
       <div className="relative w-full min-h-[200px] rounded-lg overflow-hidden">
           <Image src={image} alt={name} objectFit="cover" layout="fill" />
       </div>

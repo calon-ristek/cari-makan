@@ -1,13 +1,17 @@
 import { z } from "zod";
 import { createRouter } from "./context";
-import { Kantin, Review, Spot } from "@prisma/client";
+import { Spot } from "@prisma/client";
 import { getEnumKeyByEnumValue } from "src/utils/getEnumKeyByValue";
 import { TRPCError } from "@trpc/server";
 
 export const kantinRouter = createRouter()
 .query('get-all-kantin', {
     resolve: async ({ctx}) => {
-        const canteens = ctx.prisma.kantin.findMany()
+        const canteens = ctx.prisma.kantin.findMany({
+            include: {
+                Review: true
+            }
+        })
         return canteens
     }
 })
