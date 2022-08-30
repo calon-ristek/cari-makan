@@ -85,12 +85,14 @@ model Faculty {
     id         String      @id @default(cuid())
     name       String      @unique
     logo       String
+    Kantin     Kantin[]
 }
 
 model Kantin {
     id         String      @id @default(cuid())
     name       String      @unique @db.VarChar(255)
-    faculty    Spot
+    faculty    Faculty     @relation(fields: [facultyId], references: [id])
+    facultyId  String
     TagKantin  TagKantin[]
     Bookmark   Bookmark?   @relation(fields: [bookmarkId], references: [id])
     bookmarkId String?
