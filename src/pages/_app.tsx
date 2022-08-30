@@ -17,7 +17,7 @@ const MyApp: AppType = ({
       <Head>
         <title>CariKantin - Mencari makan di UI tak pernah semudah ini</title>
       </Head>
-      <main className="max-w-screen-sm m-auto min-h-screen mb-[70px]">
+      <main className="flex flex-col max-w-[500px] m-auto min-h-screen pb-[60px]">
         <Component {...pageProps} />
       </main>
       <BottomNav />
@@ -51,5 +51,5 @@ export default withTRPC<AppRouter>({
   /**
    * @link https://trpc.io/docs/ssr
    */
-  ssr: false,
+  ssr: true,
 })(MyApp);
