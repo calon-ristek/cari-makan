@@ -97,6 +97,7 @@ model Kantin {
     Bookmark   Bookmark?   @relation(fields: [bookmarkId], references: [id])
     bookmarkId String?
     embedUrl   String
+    imageUrl   String
     Review     Review[]
 }
 
