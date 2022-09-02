@@ -1,7 +1,5 @@
 import { z } from "zod";
 import { createRouter } from "./context";
-import { Spot } from "@prisma/client";
-import { getEnumKeyByEnumValue } from "src/utils/getEnumKeyByValue";
 import { TRPCError } from "@trpc/server";
 
 export const kantinRouter = createRouter()
@@ -9,29 +7,82 @@ export const kantinRouter = createRouter()
     resolve: async ({ctx}) => {
         const canteens = ctx.prisma.kantin.findMany({
             include: {
-              Review: true
+              _count: {
+                select: {
+                    Review: true
+                }
+              },
+              faculty: {
+                select: {
+                    name: true
+                }
+              }
             }
         })
         return canteens
     }
 })
-.query('get-canteen', {
+.query("get-faculties", {
+    resolve: async ({ctx}) => {
+
+        const faculties = await ctx.prisma.faculty.findMany()
+
+        return faculties
+    }
+})
+.query("get-kantin-by-faculty", {
     input: z.object({
         faculty: z.string().nullish()
     }),
     resolve: async ({ctx, input}) => {
-
-        const spot = getEnumKeyByEnumValue(Spot, input.faculty)
-
-        if (!spot) {
-            throw new TRPCError({code: "BAD_REQUEST"})
+        if (!input.faculty) {
+            throw new TRPCError({code: "BAD_REQUEST", message: "No faculty was included"})
         }
-        
-        const canteen = await ctx.prisma.kantin.findFirst({
+
+        const faculty = await ctx.prisma.faculty.findFirst({
             where: {
-                faculty: spot as Spot
+                name: input.faculty
             },
             include: {
+                Kantin: {
+                    include: {
+                        _count: {
+                            select: {
+                                Review: true
+                            }
+                        }
+                    }
+                }
+            }
+        })
+
+        if (!faculty) {
+            throw new TRPCError({code: "BAD_REQUEST"})
+        }
+
+        return faculty
+    }
+})
+.query('get-canteen', {
+    input: z.object({
+        name: z.string().nullish()
+    }),
+    resolve: async ({ctx, input}) => {
+        if (!input.name) {
+            throw new TRPCError({code: "BAD_REQUEST", message: "No faculty was included"})
+        }
+
+        const kantin = await ctx.prisma.kantin.findFirst({
+            where: {
+                name: input.name
+            },
+            include: {
+                faculty: {
+                    select: {
+                        name: true,
+                        logo: true
+                    }
+                },
                 Review: {
                     include: {
                         _count: {
@@ -40,10 +91,14 @@ export const kantinRouter = createRouter()
                                 Downvotes: true
                             }
                         }
+                    },
+                    orderBy: {
+                        score: 'desc'
                     }
                 }
-            }
+            },
+            
         })
-        return canteen
+        return kantin
     }
 })

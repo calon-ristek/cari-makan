@@ -6,12 +6,15 @@ import Container from "components/Container";
 import Link from "next/link";
 import TabContainer from "components/TabContainer";
 import Title from "components/Title";
+import { useSession } from "next-auth/react";
 
 const Home: NextPage = () => {
 
+  const { data: session } = useSession()
+
   return (
       <Container>
-        <h1 className="text-lg text-primary-100 mx-4 mt-7">Selamat Datang Maurice Yang</h1>
+        <h1 className="text-lg text-primary-100 mx-4 mt-7">Selamat Datang {session?.user?.name}</h1>
         <Title className="mt-0 mb-7">Mencari makan di UI tak pernah semudah ini</Title>
         <div className="relative z-[2] px-2">
           <input placeholder="Cari Kantin" type="search" className="input-field placeholder:text-white mb-5 border-white border-2 bg-transparent text-white focus:bg-white focus:text-black" />

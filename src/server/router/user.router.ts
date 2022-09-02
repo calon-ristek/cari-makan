@@ -48,6 +48,18 @@ export const userRouter = createProtectedRouter()
         const savedKantin = await ctx.prisma.kantin.findMany({
             where: {
                 bookmarkId: bookmark?.id
+            },
+            include: {
+                _count: {
+                    select: {
+                        Review: true
+                    }
+                },
+                faculty: {
+                    select: {
+                        name: true
+                    }
+                }
             }
         })
         

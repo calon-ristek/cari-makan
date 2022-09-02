@@ -13,11 +13,6 @@ datasource db {
     // https://www.prisma.io/docs/reference/api-reference/prisma-schema-reference#string
     url      = env("DATABASE_URL")
 }
-
-model Example {
-    id String @id @default(cuid())
-}
-
 // Necessary for Next auth
 model Account {
     id                String  @id @default(cuid())
@@ -85,6 +80,7 @@ model Faculty {
     id         String      @id @default(cuid())
     name       String      @unique
     logo       String
+    slug       String?
     Kantin     Kantin[]
 }
 
@@ -97,7 +93,7 @@ model Kantin {
     Bookmark   Bookmark?   @relation(fields: [bookmarkId], references: [id])
     bookmarkId String?
     embedUrl   String
-    imageUrl   String
+    imageUrl   String?
     Review     Review[]
 }
 

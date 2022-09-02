@@ -12,7 +12,7 @@
         @apply px-3 py-2 inline-block rounded-lg text-center;
     }
     .btn-primary {
-        @apply bg-secondary text-white;
+        @apply bg-primary text-white;
     }
     .input-field {
         @apply px-3 py-2 inline-block rounded-3xl w-[calc(100%-20px)] my-2 mx-2 outline-none transition-all;

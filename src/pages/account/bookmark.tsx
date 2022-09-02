@@ -13,6 +13,8 @@ const SavedPage = () => {
 
     const { data: canteens, isLoading } = trpc.useQuery(["user.get-bookmarked"])
 
+    console.log(canteens)
+
     return (
         <Container>
             <Title>Bookmarks</Title>
@@ -27,7 +29,7 @@ const SavedPage = () => {
                     {canteens && canteens.length > 0 &&
                         canteens.map(kantin => {
                             return (
-                                <Card key={kantin.id} image={ExampleImage} name={kantin.name} faculty={kantin.faculty} rating="5.0" reviewCount={10} />
+                                <Card key={kantin.id} image={ExampleImage} name={kantin.name} faculty={kantin.faculty.name} rating="5.0" reviewCount={kantin._count.Review} />
                             )
                         })
                     }

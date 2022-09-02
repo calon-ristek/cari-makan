@@ -18,7 +18,7 @@ export default defineNextConfig({
     images: {
         domains: [
             "lh3.googleusercontent.com",
-
+            "acakadul.files.wordpress.com",
         ]
     }
 });

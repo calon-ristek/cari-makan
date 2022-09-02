@@ -9,13 +9,12 @@ import LoadingScreen from 'components/LoadingScreen'
 import Image from 'next/image'
 import ExampleImage from "public/example.jpg"
 import { AnnotationIcon, StarIcon, ThumbDownIcon, ThumbUpIcon } from '@heroicons/react/solid'
-import { Review } from '@prisma/client'
 
 const KantinPage = () => {
 
     const router = useRouter()
 
-    const { data: kantin, isLoading } = trpc.useQuery(["kantin.get-canteen", {faculty: router.query.faculty && router.query.faculty.toString().toUpperCase()}], {
+    const { data: kantin, isLoading } = trpc.useQuery(["kantin.get-canteen", {name: router.query.name && router.query.name.toString().toUpperCase()}], {
         retry: false,
         cacheTime: 1000
     })
@@ -27,7 +26,7 @@ const KantinPage = () => {
     if (!kantin) {
         return (
             <Container>
-                <Title>Kantin dengan nama {router.query.faculty && router.query.faculty.toString().toUpperCase()} tak ada...</Title>
+                <Title>Kantin {router.query.name && router.query.name.toString().toUpperCase()} tak ada...</Title>
                 <TabContainer>
                     <Link href="/kantin">
                         <a className='btn btn-primary w-full text-lg'>Kembali ke explore</a>
@@ -37,14 +36,13 @@ const KantinPage = () => {
         )
     }
 
-    console.log(kantin)
     return (
         <div>
             <div className='relative w-full h-[200px]'>
-                <Image src={ExampleImage} alt={`${kantin.name} - ${kantin.faculty}`} layout="fill" className='-z-[1]' />
+                <Image src={ExampleImage} alt={kantin.name} layout="fill" className='-z-[1]' />
             </div>
             <TabContainer className='-mt-5 z-[2]'>
-                <h1 className='mb-1 text-2xl'>{kantin.name} - {kantin.faculty}</h1>
+                <h1 className='mb-1 text-2xl'>{kantin.name} - {kantin.faculty.name}</h1>
                 <div className="flex items-center gap-2">
                     <p className="flex items-center text-lg"><StarIcon className='w-6 h-6 text-yellow-400 mr-1' /> 5.0</p>
                     <p className="flex items-center text-lg"><AnnotationIcon className='w-6 h-6' /> {kantin.Review.length}</p>
